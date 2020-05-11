@@ -5,6 +5,10 @@
   "engines": {
     "node": ">= 10 <13"
   },
+  "main": "build/src/index.js",
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "@types/jest": "~25.1.2",
     "@types/node": "~12.12.27",
