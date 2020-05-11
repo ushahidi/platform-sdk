@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An SDK for the Ushahidi Platform - V3+ compatible",
   "engines": {
     "node": ">= 10 <13"
@@ -26,7 +26,8 @@
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "npm run build"
   },
   "author": "Ushahidi Team",
   "license": "AGPL-3.0",
