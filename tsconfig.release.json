@@ -5,6 +5,7 @@
     "outDir": "build",
     "removeComments": true
   },
+  "target": "ES5",
   "include": [
     "src/**/*"
   ]
