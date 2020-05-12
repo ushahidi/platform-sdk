@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-sdk",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "An SDK for the Ushahidi Platform - V3+ compatible",
   "engines": {
     "node": ">= 10 <13"

@@ -6,7 +6,7 @@ export class Surveys {
     backendUrl:string;
     token:string;
 
-    constructor (backendUrl:string, token:string) {
+    constructor (backendUrl:string, token?:string) {
         this.backendUrl = backendUrl;
         this.token = token;
     }
@@ -18,12 +18,10 @@ export class Surveys {
     async getSurveys(id?:string):Promise<unknown> {
         try {
             const url = id ? `${this.backendUrl}/api/v4/surveys/${id}` : `${this.backendUrl}/api/v4/surveys/`;
-            const response = await axios.get(url, {
-                headers: {
-                    "Authorization": `Bearer ${this.token}`
-                }
-            });
-
+            const config = this.token ? {
+                headers: {"Authorization": `Bearer ${this.token}`}
+            } : {}
+            const response = await axios.get(url, config);
             return response.data.result || response.data.results;
         }
         catch(err) {
@@ -42,6 +40,17 @@ export class Surveys {
                     "Authorization": `Bearer ${this.token}`
                 },
                 data: survey
+        });
+        return res;
+    }
+
+    async deleteSurvey(id:string):Promise<unknown> {
+            const res = await axios({
+                method: 'delete',
+                url: `${this.backendUrl}/api/v4/surveys/${id}`,
+                headers:{
+                    "Authorization": `Bearer ${this.token}`
+                }
         });
         return res;
     }
