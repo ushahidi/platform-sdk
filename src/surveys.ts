@@ -11,6 +11,10 @@ export class Surveys {
         this.token = token;
     }
 
+    setToken(token?:string) {
+        this.token = token;
+    }
+
     async getSurveys(id?:string):Promise<unknown> {
         try {
             const url = id ? `${this.backendUrl}/api/v4/surveys/${id}` : `${this.backendUrl}/api/v4/surveys/`;
