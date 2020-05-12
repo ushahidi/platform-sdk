@@ -39,4 +39,15 @@ export class Surveys {
         });
         return res;
     }
+
+    async deleteSurvey(id:string):Promise<unknown> {
+            const res = await axios({
+                method: 'delete',
+                url: `${this.backendUrl}/api/v4/surveys/${id}`,
+                headers:{
+                    "Authorization": `Bearer ${this.token}`
+                }
+        });
+        return res;
+    }
 }
