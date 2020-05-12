@@ -17,17 +17,15 @@ export class Surveys {
     }
 
     async getSurveys(id?:string):Promise<unknown> {
-        try {
+        return new Promise((resolve) => {
             const url = id ? `${this.backendUrl}/api/v4/surveys/${id}` : `${this.backendUrl}/api/v4/surveys/`;
             const config = this.token ? {
                 headers: {"Authorization": `Bearer ${this.token}`}
             } : {}
-            const response = await axios.get(url, config);
-            return response.data.result || response.data.results;
-        }
-        catch(err) {
-            return err;
-        }
+            axios.get(url, config).then(response => {
+                resolve(response.data.result || response.data.results);
+            });
+        }).catch(err => err);
     }
 
     async saveSurvey(survey:{id?:string}):Promise<unknown> {
