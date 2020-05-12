@@ -13,6 +13,7 @@ export class Surveys {
 
     setToken(token?:string) {
         this.token = token;
+        return this;
     }
 
     async getSurveys(id?:string):Promise<unknown> {
