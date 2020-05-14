@@ -11,27 +11,29 @@ export class Surveys {
         this.token = token;
     }
 
-    setToken(token?:string) {
+    setToken(token?:string):object {
         this.token = token;
         return this;
     }
 
     async getSurveys(id?:string):Promise<unknown> {
-        return new Promise((resolve) => {
+        try {
             const url = id ? `${this.backendUrl}/api/v4/surveys/${id}` : `${this.backendUrl}/api/v4/surveys/`;
             const config = this.token ? {
                 headers: {"Authorization": `Bearer ${this.token}`}
             } : {}
-            axios.get(url, config).then(response => {
-                resolve(response.data.result || response.data.results);
-            });
-        }).catch(err => err);
+            const response = await axios.get(url, config);
+            return response.data.result || response.data.results;
+        }
+        catch(err) {
+            return err;
+        }
     }
+
 
     async saveSurvey(survey:{id?:string}):Promise<unknown> {
         const method = survey.id ? 'put' : 'post';
         const url = survey.id ? `${this.backendUrl}/api/v4/surveys/${survey.id}` : `${this.backendUrl}/api/v4/surveys/`;
-
             const res = await axios({
                 method: method,
                 url: url,
