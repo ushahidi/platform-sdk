@@ -10,5 +10,11 @@ describe('getAuthToken function', () => {
         const returnValue = {token: response.data.access_token};
         mockedAxios.post.mockImplementationOnce(() => Promise.resolve(response));
         await expect(getAuthToken('test@example.com', 'test', 'http://api.test.com')).resolves.toEqual(returnValue);
-    });    
+    });
+    it('should return an error if something goes wrong', async () => {
+        const Error = 'network error';
+        mockedAxios.post.mockRejectedValue(Error);
+        const returnValue = await getAuthToken('test@example.com', 'test', 'http://api.test.com');
+        expect(returnValue).toEqual(Error);
+    });
 });

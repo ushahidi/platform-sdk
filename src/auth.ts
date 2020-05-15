@@ -13,9 +13,8 @@ export const getAuthToken = async (username:string, password:string, backendURL:
                 username: username
             }
         );
-        return {token: response.data.access_token}
+        return {token: response.data.access_token};
     } catch(err) {
-        // TODO: Do we want a more human-friendly error?
         return err;
     }
 }
