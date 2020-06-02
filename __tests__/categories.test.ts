@@ -16,16 +16,27 @@ describe('Categories-constructor', () => {
     });
 });
 
+describe('setToken-function', () => {
+    it('should set the token', () => {
+        expect(ushahidiCategories.token).toEqual('token');
+        ushahidiCategories.setToken('new token');
+        expect(ushahidiCategories.token).toEqual('new token');
+        ushahidiCategories.setToken('token');
+        expect(ushahidiCategories.token).toEqual('token');
+    });
+});
+
 describe('getCategories-function', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+
     it('should return all categories',  async () => {
         const data = [{id: 2}, {id:3}];
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{results:data}}));
         await expect(ushahidiCategories.getCategories()).resolves.toEqual(data);
     });
-    it('should return one survey',  async () => {
+    it('should return one category',  async () => {
         const data = {id: 1};
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
         await expect(ushahidiCategories.getCategories('1')).resolves.toEqual(data);
@@ -48,3 +59,45 @@ describe('getCategories-function', () => {
             expect(returnValue).toEqual(Error);
         });
     });
+
+describe('saveCategory-function', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+    it('should use post-method if no id is provided', async () => {
+        const category = {id:null, name:'Test category'};
+        await ushahidiCategories.saveCategory(category);
+        expect(axios).toBeCalledWith({
+            method: 'post',
+            url: 'http://api.test.com/api/v4/categories/',
+            headers: { 'Authorization': 'Bearer token' },
+            data: category,
+        });
+    });
+
+    it('should use put-method if id is provided', async () => {
+        const category = {id:'1', name:'Test category'};
+        await ushahidiCategories.saveCategory(category);
+        expect(axios).toBeCalledWith({
+            method: 'put',
+            url: 'http://api.test.com/api/v4/categories/1',
+            headers: { 'Authorization': 'Bearer token' },
+            data: category,
+        });
+    });
+});
+
+describe('deleteCategories-function', () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('should use delete-method', async () => {
+        await ushahidiCategories.deleteCategory('1');
+        expect(axios).toBeCalledWith({
+            method: 'delete',
+            url: 'http://api.test.com/api/v4/categories/1',
+            headers: { 'Authorization': 'Bearer token' }
+        });
+    });
+});
