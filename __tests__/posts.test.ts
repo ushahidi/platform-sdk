@@ -48,14 +48,14 @@ describe('getPosts-function', () => {
             const postWithoutToken = new Posts('http://api.test.com');
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
-            await expect(postWithoutToken.getCategories('1')).resolves.toEqual(data);
+            await expect(postWithoutToken.getPosts('1')).resolves.toEqual(data);
             expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/posts/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
             const Error = 'network error';
             mockedAxios.get.mockRejectedValue(Error);
-            const returnValue = await ushahidiPosts.getCategories('1');
+            const returnValue = await ushahidiPosts.getPosts('1');
             expect(returnValue).toEqual(Error);
         });
     });
