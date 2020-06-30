@@ -19,8 +19,8 @@ export class Categories {
   async getCategories(id?: string): Promise<unknown> {
     try {
       const url = id
-        ? `${this.backendUrl}/api/v4/categories/${id}`
-        : `${this.backendUrl}/api/v4/categories/`;
+        ? `${this.backendUrl}/api/v5/categories/${id}`
+        : `${this.backendUrl}/api/v5/categories/`;
       const config = this.token
         ? {
             headers: { Authorization: `Bearer ${this.token}` },
@@ -36,8 +36,8 @@ export class Categories {
   async saveCategory(category: { id?: string }): Promise<unknown> {
     const method = category.id ? 'put' : 'post';
     const url = category.id
-      ? `${this.backendUrl}/api/v4/categories/${category.id}`
-      : `${this.backendUrl}/api/v4/categories/`;
+      ? `${this.backendUrl}/api/v5/categories/${category.id}`
+      : `${this.backendUrl}/api/v5/categories/`;
     const res = await axios({
       method: method,
       url: url,
@@ -52,7 +52,7 @@ export class Categories {
   async deleteCategory(id: string): Promise<unknown> {
     const res = await axios({
       method: 'delete',
-      url: `${this.backendUrl}/api/v4/categories/${id}`,
+      url: `${this.backendUrl}/api/v5/categories/${id}`,
       headers: {
         Authorization: `Bearer ${this.token}`,
       },

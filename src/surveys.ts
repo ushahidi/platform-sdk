@@ -19,8 +19,8 @@ export class Surveys {
   async getSurveys(id?: string): Promise<unknown> {
     try {
       const url = id
-        ? `${this.backendUrl}/api/v4/surveys/${id}`
-        : `${this.backendUrl}/api/v4/surveys/`;
+        ? `${this.backendUrl}/api/v5/surveys/${id}`
+        : `${this.backendUrl}/api/v5/surveys/`;
       const config = this.token
         ? {
             headers: { Authorization: `Bearer ${this.token}` },
@@ -36,8 +36,8 @@ export class Surveys {
   async saveSurvey(survey: { id?: string }): Promise<unknown> {
     const method = survey.id ? 'put' : 'post';
     const url = survey.id
-      ? `${this.backendUrl}/api/v4/surveys/${survey.id}`
-      : `${this.backendUrl}/api/v4/surveys/`;
+      ? `${this.backendUrl}/api/v5/surveys/${survey.id}`
+      : `${this.backendUrl}/api/v5/surveys/`;
     const res = await axios({
       method: method,
       url: url,
@@ -52,7 +52,7 @@ export class Surveys {
   async deleteSurvey(id: string): Promise<unknown> {
     const res = await axios({
       method: 'delete',
-      url: `${this.backendUrl}/api/v4/surveys/${id}`,
+      url: `${this.backendUrl}/api/v5/surveys/${id}`,
       headers: {
         Authorization: `Bearer ${this.token}`,
       },
