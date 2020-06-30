@@ -41,7 +41,7 @@ describe('getCategories-function', () => {
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
         await expect(ushahidiCategories.getCategories('1')).resolves.toEqual(data);
         expect(mockedAxios.get).toBeCalledTimes(1);
-        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/categories/1', {headers: { 'Authorization': 'Bearer token' }});
+        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/categories/1', {headers: { 'Authorization': 'Bearer token' }});
         });
 
         it('should not use token if not set',  async () => {
@@ -49,14 +49,14 @@ describe('getCategories-function', () => {
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
             await expect(categoryWithoutToken.getCategories('1')).resolves.toEqual(data);
-            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/categories/1', {});
+            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/categories/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
             const Error = 'network error';
             mockedAxios.get.mockRejectedValue(Error);
-            const returnValue = await ushahidiCategories.getCategories('1');
-            expect(returnValue).toEqual(Error);
+            await expect(ushahidiCategories.getCategories('1')).rejects.toThrow('network error');
+
         });
     });
 
@@ -69,7 +69,7 @@ describe('saveCategory-function', () => {
         await ushahidiCategories.saveCategory(category);
         expect(axios).toBeCalledWith({
             method: 'post',
-            url: 'http://api.test.com/api/v4/categories/',
+            url: 'http://api.test.com/api/v5/categories/',
             headers: { 'Authorization': 'Bearer token' },
             data: category,
         });
@@ -80,7 +80,7 @@ describe('saveCategory-function', () => {
         await ushahidiCategories.saveCategory(category);
         expect(axios).toBeCalledWith({
             method: 'put',
-            url: 'http://api.test.com/api/v4/categories/1',
+            url: 'http://api.test.com/api/v5/categories/1',
             headers: { 'Authorization': 'Bearer token' },
             data: category,
         });
@@ -96,7 +96,7 @@ describe('deleteCategories-function', () => {
         await ushahidiCategories.deleteCategory('1');
         expect(axios).toBeCalledWith({
             method: 'delete',
-            url: 'http://api.test.com/api/v4/categories/1',
+            url: 'http://api.test.com/api/v5/categories/1',
             headers: { 'Authorization': 'Bearer token' }
         });
     });

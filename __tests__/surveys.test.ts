@@ -37,7 +37,7 @@ describe('getSurveys-function', () => {
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
         await expect(ushahidiSurveys.getSurveys('1')).resolves.toEqual(data);
         expect(mockedAxios.get).toBeCalledTimes(1);
-        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/surveys/1', {headers: { 'Authorization': 'Bearer token' }});
+        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/surveys/1', {headers: { 'Authorization': 'Bearer token' }});
         });
 
         it('should not use token if not set',  async () => {
@@ -45,14 +45,13 @@ describe('getSurveys-function', () => {
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
             await expect(surveyWithoutToken.getSurveys('1')).resolves.toEqual(data);
-            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/surveys/1', {});
+            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/surveys/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
             const Error = 'network error';
             mockedAxios.get.mockRejectedValue(Error);
-            const returnValue = await ushahidiSurveys.getSurveys('1');
-            expect(returnValue).toEqual(Error);
+            await expect(ushahidiSurveys.getSurveys('1')).rejects.toThrow('network error');
         });
     });
     describe('saveSurvey-function', ()=>{
@@ -65,7 +64,7 @@ describe('getSurveys-function', () => {
             await ushahidiSurveys.saveSurvey(survey);
             expect(axios).toBeCalledWith({
                 method: 'post',
-                url: 'http://api.test.com/api/v4/surveys/',
+                url: 'http://api.test.com/api/v5/surveys/',
                 headers: { 'Authorization': 'Bearer token' },
                 data: survey,
             });
@@ -76,7 +75,7 @@ describe('getSurveys-function', () => {
             await ushahidiSurveys.saveSurvey(survey);
             expect(axios).toBeCalledWith({
                 method: 'put',
-                url: 'http://api.test.com/api/v4/surveys/1',
+                url: 'http://api.test.com/api/v5/surveys/1',
                 headers: { 'Authorization': 'Bearer token' },
                 data: survey,
             });
@@ -92,7 +91,7 @@ describe('getSurveys-function', () => {
             await ushahidiSurveys.deleteSurvey('5');
             expect(axios).toBeCalledWith({
                 method: 'delete',
-                url: 'http://api.test.com/api/v4/surveys/5',
+                url: 'http://api.test.com/api/v5/surveys/5',
                 headers: { 'Authorization': 'Bearer token' }
             });
         });

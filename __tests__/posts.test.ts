@@ -41,7 +41,7 @@ describe('getPosts-function', () => {
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve(data));
         await expect(ushahidiPosts.getPosts('1')).resolves.toEqual(data);
         expect(mockedAxios.get).toBeCalledTimes(1);
-        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/posts/1', {headers: { 'Authorization': 'Bearer token' }});
+        expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/posts/1', {headers: { 'Authorization': 'Bearer token' }});
         });
 
         it('should not use token if not set',  async () => {
@@ -49,14 +49,13 @@ describe('getPosts-function', () => {
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve(data));
             await expect(postWithoutToken.getPosts('1')).resolves.toEqual(data);
-            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v4/posts/1', {});
+            expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/posts/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
-            const Error = 'network error';
-            mockedAxios.get.mockRejectedValue(Error);
-            const returnValue = await ushahidiPosts.getPosts('1');
-            expect(returnValue).toEqual(Error);
+            const error = 'network error';
+            mockedAxios.get.mockRejectedValue(error);
+            await expect(ushahidiPosts.getPosts('1')).rejects.toThrow('network error');
         });
     });
 
