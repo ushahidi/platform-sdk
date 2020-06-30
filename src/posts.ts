@@ -27,7 +27,7 @@ export class Posts {
         : {};
       return await axios.get(url, config);
     } catch (err) {
-      return err;
+      throw new Error(err);
     }
   }
 

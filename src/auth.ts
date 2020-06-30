@@ -19,6 +19,6 @@ export const getAuthToken = async (
     });
     return { token: response.data.access_token };
   } catch (err) {
-    return err;
+    throw new Error(err);
   }
 };

@@ -29,7 +29,7 @@ export class Surveys {
       const response = await axios.get(url, config);
       return response.data.result || response.data.results;
     } catch (err) {
-      return err;
+      throw new Error(err);
     }
   }
 

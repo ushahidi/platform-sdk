@@ -29,8 +29,8 @@ export class Categories {
       const response = await axios.get(url, config);
       return response.data.result || response.data.results;
     } catch (err) {
-      return err;
-    }
+        throw new Error(err);
+      }
   }
 
   async saveCategory(category: { id?: string }): Promise<unknown> {
