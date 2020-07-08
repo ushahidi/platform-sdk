@@ -36,20 +36,21 @@ export class Posts {
     const url = post.id
       ? `${this.backendUrl}/api/v5/posts/${post.id}`
       : `${this.backendUrl}/api/v5/posts/`;
-    const request = {
-      method: method,
-      url: url,
-      data: post,
-    };
+    let headers = {};
     /**
      * This lets the client not worry about tokens
      * because the SDK knows how to fallback if it needs to
      */
     if (this.token) {
-      request["headers"] = {
+      headers = {
         Authorization: `Bearer ${this.token}`,
       };
     }
-    return await axios(request);
+    return await axios({
+      method: method,
+      url: url,
+      data: post,
+      headers
+    });
   }
 }
