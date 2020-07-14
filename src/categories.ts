@@ -6,15 +6,19 @@ export class Categories {
   backendUrl: string;
   token: string;
 
-  constructor(backendUrl: string, token?: string) {
+  constructor(backendUrl: string, token?: string, expires?: number) {
     this.backendUrl = backendUrl;
-    this.token = token;
+    this.setToken(token, expires);
   }
 
-  setToken(token?: string): object {
-    this.token = token;
+  setToken(token?: string, expires?: number): object {
+    this.token = null;
+    if (expires >= Math.floor(Date.now() / 1000)) {
+      this.token = token;
+    }
     return this;
   }
+
 
   async getCategories(id?: string): Promise<unknown> {
     try {

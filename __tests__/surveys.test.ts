@@ -2,24 +2,24 @@ import {Surveys} from '../src/surveys';
 import axios from 'axios';
 jest.mock('axios');
 
-const ushahidiSurveys = new Surveys('http://api.test.com', 'token');
+const ushahidiSurveys = new Surveys('http://api.test.com', 'token', Date.parse("2080 06 06"));
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Surveys-constructor', () => {
     it('should set token if it is provided', () => {
-        const testSurveyClass = new Surveys('http://api.test.com', 'token');
+        const testSurveyClass = new Surveys('http://api.test.com', 'token', Date.parse("2080 06 06"));
         expect(testSurveyClass.token).toEqual('token');
     })
     it('token should be undefined if it is not provided', () => {
         const testSurveyClass = new Surveys('http://api.test.com');
-        expect(testSurveyClass.token).toBeUndefined();
+        expect(testSurveyClass.token).toBeNull();
     })
 });
 describe('setToken-function', () => {
     it('should set token if it is provided', () => {
         const testSurveyClass = new Surveys('http://api.test.com');
-        expect(testSurveyClass.token).toBeUndefined();
-        testSurveyClass.setToken('test token')
+        expect(testSurveyClass.token).toBeNull();
+        testSurveyClass.setToken('test token', Date.parse("2080 06 06"))
         expect(testSurveyClass.token).toEqual('test token');
     })
 });

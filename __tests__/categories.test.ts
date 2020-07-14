@@ -2,26 +2,26 @@ import {Categories} from '../src/categories';
 import axios from 'axios';
 jest.mock('axios');
 
-const ushahidiCategories = new Categories('http://api.test.com', 'token');
+const ushahidiCategories = new Categories('http://api.test.com', 'token', Date.parse("2080 06 06"));
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Categories-constructor', () => {
     it('should set token if it is provided', () => {
-        const testCategoriesClass = new Categories('http://api.test.com', 'token');
+        const testCategoriesClass = new Categories('http://api.test.com', 'token', Date.parse("2080 06 06"));
         expect(testCategoriesClass.token).toEqual('token');
     });
-    it('token should be undefined if it is not provided', () => {
+    it('token should be null if it is not provided', () => {
         const testCategoriesClass = new Categories('http://api.test.com');
-        expect(testCategoriesClass.token).toBeUndefined();
+        expect(testCategoriesClass.token).toBeNull();
     });
 });
 
 describe('setToken-function', () => {
     it('should set the token', () => {
         expect(ushahidiCategories.token).toEqual('token');
-        ushahidiCategories.setToken('new token');
+        ushahidiCategories.setToken('new token', Date.parse("2080 06 06"));
         expect(ushahidiCategories.token).toEqual('new token');
-        ushahidiCategories.setToken('token');
+        ushahidiCategories.setToken('token', Date.parse("2080 06 06"));
         expect(ushahidiCategories.token).toEqual('token');
     });
 });

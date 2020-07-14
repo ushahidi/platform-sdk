@@ -2,26 +2,26 @@ import {Posts} from '../src/posts';
 import axios from 'axios';
 jest.mock('axios');
 
-const ushahidiPosts = new Posts('http://api.test.com', 'token');
+const ushahidiPosts = new Posts('http://api.test.com', 'token', Date.parse("2080 06 06"));
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Posts-constructor', () => {
     it('should set token if it is provided', () => {
-        const testPostsClass = new Posts('http://api.test.com', 'token');
+        const testPostsClass = new Posts('http://api.test.com', 'token', Date.parse("2080 06 06"));
         expect(testPostsClass.token).toEqual('token');
     });
     it('token should be undefined if it is not provided', () => {
         const testPostsClass = new Posts('http://api.test.com');
-        expect(testPostsClass.token).toBeUndefined();
+        expect(testPostsClass.token).toBeNull();
     });
 });
 
 describe('setToken-function', () => {
     it('should set the token', () => {
         expect(ushahidiPosts.token).toEqual('token');
-        ushahidiPosts.setToken('new token');
+        ushahidiPosts.setToken('new token', Date.parse("2080 06 06"));
         expect(ushahidiPosts.token).toEqual('new token');
-        ushahidiPosts.setToken('token');
+        ushahidiPosts.setToken('token', Date.parse("2080 06 06"));
         expect(ushahidiPosts.token).toEqual('token');
     });
 });
