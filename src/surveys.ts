@@ -18,7 +18,7 @@ export class Surveys {
   }
   static validateNonEmptyOptions(options: []) {
     // check against duplicate or empty options
-    return options.filter(i => i === '' || i === null).length > 0;
+    return options.filter(i => i === '' || i === null).length === 0;
   }
 
   setToken(token?: string, expires?: number): object {
