@@ -12,7 +12,7 @@ export class Surveys {
   }
 
   static fieldHasTranslations = (field, lang) => {
-    return field.translations[lang] && field.translations[lang].options.length > 0;
+    return field.translations[lang] && field.translations[lang].options && field.translations[lang].options.length > 0;
   }
 
   static fieldCanHaveOptions = (field) => {
