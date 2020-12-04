@@ -10,15 +10,23 @@ export class Surveys {
     this.backendUrl = backendUrl;
     this.setToken(token, expires);
   }
-  static validateUniqueOptions(options: []) {
 
+  static fieldHasTranslations = (field, lang) => {
+    return field.translations[lang] && field.translations[lang].options.length > 0;
+  }
+
+  static fieldCanHaveOptions = (field) => {
+    return field.input === 'checkbox' || field.input === 'radio';
+  }
+
+  static areOptionsUnique(options: []) {
     // converting to Set would remove duplicates,so if size matches original we are good
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
     return new Set(options).size === options.length;
   }
-  static validateNonEmptyOptions(options: []) {
+  static hasEmptyOptions(options: []) {
     // check against duplicate or empty options
-    return options.filter(i => i === '' || i === null).length === 0;
+    return options.filter(i => i === '' || i === null).length > 0;
   }
 
   setToken(token?: string, expires?: number): object {
