@@ -16,7 +16,7 @@ export class Surveys {
   }
 
   static fieldCanHaveOptions = (field) => {
-    return field.input === 'checkbox' || field.input === 'radio';
+    return field.input === 'checkbox' || field.input === 'radio' || field.input === 'select';
   }
 
   static areOptionsUnique(options: []) {
