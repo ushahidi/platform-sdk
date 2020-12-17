@@ -56,4 +56,15 @@ export class Posts {
       headers
     });
   }
+
+  async deletePost(id: string): Promise<unknown> {
+    const res = await axios({
+      method: 'delete',
+      url: `${this.backendUrl}/api/v5/posts/${id}`,
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+    return res;
+  }
 }
