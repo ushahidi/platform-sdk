@@ -39,7 +39,7 @@ describe('getPosts-function', () => {
     it('should return one post',  async () => {
         const data = {id: 1};
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve(data));
-        await expect(ushahidiPosts.getPosts('1')).resolves.toEqual(data);
+        await expect(ushahidiPosts.findPost('1')).resolves.toEqual(data);
         expect(mockedAxios.get).toBeCalledTimes(1);
         expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/posts/1', {headers: { 'Authorization': 'Bearer token' }});
         });
@@ -48,14 +48,14 @@ describe('getPosts-function', () => {
             const postWithoutToken = new Posts('http://api.test.com');
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve(data));
-            await expect(postWithoutToken.getPosts('1')).resolves.toEqual(data);
+            await expect(postWithoutToken.findPost('1')).resolves.toEqual(data);
             expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/posts/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
             const error = 'network error';
             mockedAxios.get.mockRejectedValue(error);
-            await expect(ushahidiPosts.getPosts('1')).rejects.toThrow('network error');
+            await expect(ushahidiPosts.findPost('1')).rejects.toThrow('network error');
         });
     });
 
