@@ -18,9 +18,42 @@ export class Posts {
     return this;
   }
 
-  async findPost(id: string): Promise<unknown> {
+  getOnly(only) {
+    if (only) {
+      return 'only=' + only.join(',');
+    }
+    return null;
+  }
+  getHydrate(hydrate) {
+    if (hydrate) {
+      return 'hydrate=' + hydrate.join(',');
+    }
+    return null;
+  }
+  getParams(params) {
+    return encodeURI(params.concat('&'));
+  }
+
+  makeUrl(only, hydrate, url) {
+    let _only = this.getOnly(only);
+    let _hydrate = this.getHydrate(hydrate)
+    let _params = [];
+    if (_only) {
+      _params.push(_only);
+    }
+    if (_hydrate) {
+      _params.push(_hydrate)
+    }
+    let params = this.getParams(_params);
+    if (params) {
+      url = `${url}?${params}`;
+    }
+    return url;
+  }
+
+  async findPost(id: string, only?: [], hydrate?: []): Promise<unknown> {
     try {
-      const url = `${this.backendUrl}/api/v5/posts/${id}`;
+      let url = this.makeUrl(only, hydrate, `${this.backendUrl}/api/v5/posts/${id}`);
       const config = this.token
           ? {
             headers: { Authorization: `Bearer ${this.token}` },
@@ -32,15 +65,39 @@ export class Posts {
     }
   }
 
-  async getPosts(): Promise<unknown> {
+  async getPosts(only?: [], hydrate?: []): Promise<unknown> {
     try {
-      const url = `${this.backendUrl}/api/v5/posts/`;
+      let url = this.makeUrl(only, hydrate,`${this.backendUrl}/api/v5/posts/`);
       const config = this.token
         ? {
             headers: { Authorization: `Bearer ${this.token}` },
           }
         : {};
       return await axios.get(url, config);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+
+  async getSurveys(id?: string, only?: [], hydrate?: []): Promise<unknown> {
+    try {
+      let url = id
+          ? `${this.backendUrl}/api/v5/surveys/${id}`
+          : `${this.backendUrl}/api/v5/surveys/`;
+      let _only = this.getOnly(only);
+      let _hydrate = this.getHydrate(hydrate)
+      let params = this.getParams([_only, _hydrate]);
+      if (params) {
+        url = `${url}?${params}`;
+      }
+      const config = this.token
+          ? {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+          : {};
+      const response = await axios.get(url, config);
+      return response.data.result || response.data.results;
     } catch (err) {
       throw new Error(err);
     }
