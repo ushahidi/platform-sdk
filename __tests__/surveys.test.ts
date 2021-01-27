@@ -32,10 +32,11 @@ describe('getSurveys-function', () => {
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{results:data}}));
         await expect(ushahidiSurveys.getSurveys()).resolves.toEqual(data);
     });
+
     it('should return one survey',  async () => {
         const data = {id: 1};
         mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
-        await expect(ushahidiSurveys.getSurveys('1')).resolves.toEqual(data);
+        await expect(ushahidiSurveys.findSurvey('1')).resolves.toEqual(data);
         expect(mockedAxios.get).toBeCalledTimes(1);
         expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/surveys/1', {headers: { 'Authorization': 'Bearer token' }});
         });
@@ -44,14 +45,14 @@ describe('getSurveys-function', () => {
             const surveyWithoutToken = new Surveys('http://api.test.com');
             const data = {id: 1};
             mockedAxios.get.mockImplementationOnce(() => Promise.resolve({data:{result:data}}));
-            await expect(surveyWithoutToken.getSurveys('1')).resolves.toEqual(data);
+            await expect(surveyWithoutToken.findSurvey('1')).resolves.toEqual(data);
             expect(mockedAxios.get).toBeCalledWith('http://api.test.com/api/v5/surveys/1', {});
         });
 
         it('returns an error if something goes wrong', async () => {
             const Error = 'network error';
             mockedAxios.get.mockRejectedValue(Error);
-            await expect(ushahidiSurveys.getSurveys('1')).rejects.toThrow('network error');
+            await expect(ushahidiSurveys.findSurvey('1')).rejects.toThrow('network error');
         });
     });
     describe('saveSurvey-function', ()=>{
