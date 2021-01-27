@@ -31,6 +31,9 @@ export class Posts {
     return null;
   }
   getParams(params) {
+    if (params.length === 0) {
+      return '';
+    }
     return encodeURI(params.concat('&'));
   }
 

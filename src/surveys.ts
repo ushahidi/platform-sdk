@@ -49,7 +49,11 @@ export class Surveys {
     }
     return null;
   }
+
   getParams(params) {
+    if (params.length === 0) {
+      return '';
+    }
     return encodeURI(params.concat('&'));
   }
 
