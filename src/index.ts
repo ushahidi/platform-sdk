@@ -7,3 +7,4 @@ export { getAuthToken } from './auth';
 export { Categories } from './categories';
 export { getLanguages } from './utils';
 export { Posts } from './posts';
+export { Config } from './config';
