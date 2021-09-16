@@ -10,15 +10,11 @@ export class Config {
   }
 
   async getConfig(id?: string): Promise<unknown> {
-    try {
       const url = id
         ? `${this.backendUrl}/api/v3/config/${id}`
         : `${this.backendUrl}/api/v3/config/`;
 
       const response = await axios.get(url);
       return response.data;
-    } catch (err) {
-        throw new Error(err);
-      }
   }
 }
