@@ -37,7 +37,7 @@
   "author": "Ushahidi Team",
   "license": "AGPL-3.0",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "tslib": "~1.10.0"
   }
 }
