@@ -54,7 +54,7 @@ export class Surveys {
     if (params.length === 0) {
       return '';
     }
-    return encodeURI(params.concat('&'));
+    return encodeURI(params.join('&'));
   }
 
   makeUrl(only, hydrate, url) {
